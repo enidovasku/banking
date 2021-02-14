@@ -2,8 +2,9 @@ package domain
 
 import (
 	"database/sql"
-	"log"
 	"time"
+
+	"github.com/enidovasku/banking/logger"
 
 	"github.com/enidovasku/banking/errs"
 
@@ -28,7 +29,7 @@ func (d CustomerRepositoryDb) FindAll(status string) ([]Customer, *errs.AppError
 	}
 
 	if err != nil {
-		log.Println("Error while querying customer table " + err.Error())
+		logger.Error("Error while querying customer table " + err.Error())
 		return nil, errs.NewUnexpectedError("Unexpected database error")
 	}
 	customers := make([]Customer, 0)
@@ -36,7 +37,7 @@ func (d CustomerRepositoryDb) FindAll(status string) ([]Customer, *errs.AppError
 		var c Customer
 		err := rows.Scan(&c.Id, &c.Name, &c.City, &c.Zipcode, &c.DateOfBirth, &c.Status)
 		if err != nil {
-			log.Println("Error while scanning rows " + err.Error())
+			logger.Error("Error while scanning rows " + err.Error())
 			return nil, errs.NewUnexpectedError("Unexpected database error")
 		}
 		customers = append(customers, c)
@@ -55,7 +56,7 @@ func (d CustomerRepositoryDb) ById(id string) (*Customer, *errs.AppError) {
 			return nil, errs.NewNotFoundError("Customer not found")
 		}
 
-		log.Println("Error while scanning customer " + err.Error())
+		logger.Error("Error while scanning customer " + err.Error())
 		return nil, errs.NewUnexpectedError("Unexpected database error")
 	}
 	return &c, nil
