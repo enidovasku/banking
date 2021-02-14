@@ -1,8 +1,10 @@
 package app
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/enidovasku/banking/domain"
 	"github.com/enidovasku/banking/service"
@@ -10,7 +12,16 @@ import (
 	"github.com/gorilla/mux"
 )
 
+func sanityCheck() {
+	if os.Getenv("SERVER_ADDRESS") == "" || os.Getenv("SERVER_PORT") == "" {
+		log.Fatal("Env var nor defined")
+	}
+}
+
 func Start() {
+
+	sanityCheck()
+
 	router := mux.NewRouter()
 
 	//wiring
@@ -20,5 +31,8 @@ func Start() {
 	router.HandleFunc("/customers", ch.getAllCustomers).Methods(http.MethodGet)
 	router.HandleFunc("/customers/{customer_id:[0-9]+}", ch.getCustomer).Methods(http.MethodGet)
 
-	log.Fatal(http.ListenAndServe("localhost:8000", router))
+	address := os.Getenv("SERVER_ADDRESS")
+	port := os.Getenv("SERVER_PORT")
+
+	log.Fatal(http.ListenAndServe(fmt.Sprintf("%s:%s", address, port), router))
 }

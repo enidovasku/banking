@@ -12,12 +12,12 @@ CREATE TABLE `customers` (
   PRIMARY KEY (`customer_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2006 DEFAULT CHARSET=latin1;
 INSERT INTO `customers` VALUES
-	(2000,'Steve','1978-12-15','Delhi','110075',1),
+	(2000,'Enido','1978-12-15','Hamburg','22301',1),
 	(2001,'Arian','1988-05-21','Newburgh, NY','12550',1),
 	(2002,'Hadley','1988-04-30','Englewood, NJ','07631',1),
 	(2003,'Ben','1988-01-04','Manchester, NH','03102',0),
 	(2004,'Nina','1988-05-14','Clarkston, MI','48348',1),
-	(2005,'Osman','1988-11-08','Hyattsville, MD','20782',0);
+	(2005,'Rob','1988-11-08','Hyattsville, MD','20782',0);
 
 
 DROP TABLE IF EXISTS `accounts`;
